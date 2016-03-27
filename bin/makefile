@@ -3,12 +3,12 @@ INCLUDE_PATH = ../include/
 TEST_PATH = ../tests/
 VPATH = $(SOURCE_PATH) $(INCLUDE_PATH) $(TEST_PATH)
 
-CXXFLAGS = -pedantic -Wall -Werror -g -funsigned-char -I../include/
+CXXFLAGS = -std=c++11 -pedantic -Wall -Werror -g -funsigned-char -I../include/
 OFLAGS = -g
 
 OBJS = reader.o
-TEST_OBJS := $(addsuffix ut, $(OBJS))
-TEST_OBJS := $(addprefix test_, $(TEST_OBJS))
+TEST_OBJS := $(addprefix test_, $(OBJS))
+TEST_OBJS := $(addsuffix ut, $(TEST_OBJS))
 
 .PHONY: all clean test
 
