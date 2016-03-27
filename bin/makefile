@@ -7,8 +7,9 @@ CXXFLAGS = -std=c++11 -pedantic -Wall -Werror -g -funsigned-char -I../include/
 OFLAGS = -g
 
 OBJS = reader.o
-TEST_OBJS := $(addprefix test_, $(OBJS))
-TEST_OBJS := $(addsuffix ut, $(TEST_OBJS))
+TEST_OBJS := $(basename $(OBJS))
+TEST_OBJS := $(addsuffix _test.o, $(TEST_OBJS))
+TEST_OUTS := $(addsuffix ut, $(TEST_OBJS))
 
 .PHONY: all clean test
 
@@ -21,8 +22,11 @@ clean:
 	rm -f *.o *.out
 
 
-test: $(TEST_OBJS)
-	$(foreach X, $(TEST_OBJS), ./$X)
+test: $(TEST_OUTS)
+	$(foreach X, $(TEST_OUTS), ./$X)
 
-test_%.out: test_%.o %.o
+$(TEST_OUTS): $(TEST_OBJS) $(OBJS)
 	$(CXX) $(OFLAGS) -o $@ $^
+
+#%_test.out: %_test.o %.o
+#	$(CXX) $(OFLAGS) -o $@ $^

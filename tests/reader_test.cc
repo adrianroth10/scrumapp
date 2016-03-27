@@ -7,33 +7,35 @@
 
 using namespace std;
 
-void test_constructor();
-void test_get_filename();
-void test_all();
-void test_done();
+void constructor_test();
+void get_filename_test();
+void all_test();
+void undone_test();
+void done_test();
 
 int main ()
 {
-	test_constructor();
-	test_get_filename();
-	test_all();
-	test_done();
+	constructor_test();
+	get_filename_test();
+	all_test();
+	undone_test();
+	done_test();
 	return 0;
 }
 
-void test_constructor()
+void constructor_test()
 {
 	Reader r("test/functioning");
-	assert(r.get_error() == 0);
+	assert(r.get_error() == NO_ERROR);
 
-	Reader r2("../error");
-	assert(r2.get_error() == 1);
+	Reader r2("/test/../error");
+	assert(r2.get_error() == WRONG_FILENAME);
 
 	Reader r3("test/error/");
-	assert(r3.get_error() == 1);
+	assert(r3.get_error() == WRONG_FILENAME);
 }
 
-void test_get_filename()
+void get_filename_test()
 {
 	Reader r("test/functioning");
 	assert(r.get_filename().compare("test/functioning") == 0);
@@ -52,20 +54,20 @@ void test_get_filename()
 	assert(r4.get_filename().compare("manipulating") == 0);
 }
 
-void test_all()
+void all_test()
 {
 	Reader read("tests/sprint_2016_03_18");
-	string result, correct;
+	string *result, correct;
 	result = read.all();
 	correct = "\
 plugg\n\
 	kurs 1\n\
-		övning\n\
-			uppgift 1, uppgift 2, uppgift 3\n\
-	kurs 2\n\
 		laboration\n\
 			(done) förbredelser\n\
 			utförande\n\
+		övning\n\
+			uppgift 1, uppgift 2, uppgift 3\n\
+	kurs 2\n\
 		övning\n\
 			uppgift 1\n\
 mat\n\
@@ -91,45 +93,23 @@ programmering\n\
 	(done) party37\
 ";
 
-	assert(result.compare(correct) == 0);
+	assert(result->compare(correct) == 0);
+	delete result;
 }
 
-void test_done()
+void undone_test()
 {
 	Reader read("tests/sprint_2016_03_18");
-	string result, correct;
-	result = read.done();
-	correct = "\
-plugg\n\
-		laboration\n\
-			(done) förbredelser\n\
-programmering\n\
-	projekt 1\n\
-		(done) del 1\n\
-	(done) projekt 2\n\
-		(done) finish it\n\
-(done) roligt\n\
-	(done) party\n\
-	(done) party2\n\
-	(done) party37\
-";
-
-	assert(result.compare(correct) == 0);
-}
-
-void test_undone()
-{
-	Reader read("tests/sprint_2016_03_18");
-	string result, correct;
+	string *result, correct;
 	result = read.undone();
 	correct = "\
 plugg\n\
 	kurs 1\n\
+		laboration\n\
+			utförande\n\
 		övning\n\
 			uppgift 1, uppgift 2, uppgift 3\n\
 	kurs 2\n\
-		laboration\n\
-			utförande\n\
 		övning\n\
 			uppgift 1\n\
 mat\n\
@@ -148,5 +128,31 @@ programmering\n\
 		del 3\
 ";
 
-	assert(result.compare(correct) == 0);
+	assert(result->compare(correct) == 0);
+	delete result;
+}
+
+void done_test()
+{
+	Reader read("tests/sprint_2016_03_18");
+	string *result, correct;
+	result = read.done();
+	correct = "\
+plugg\n\
+	kurs 1\n\
+		laboration\n\
+			(done) förbredelser\n\
+programmering\n\
+	projekt 1\n\
+		(done) del 1\n\
+	(done) projekt 2\n\
+		(done) finish it\n\
+(done) roligt\n\
+	(done) party\n\
+	(done) party2\n\
+	(done) party37\
+";
+
+	assert(result->compare(correct) == 0);
+	delete result;
 }
