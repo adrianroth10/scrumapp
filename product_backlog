@@ -1,0 +1,24 @@
+classes 
+	(ongoing) reader
+		every object reads a specifik file and finds whats done/undone and can also find special titles and todo's
+		public methods
+			(done) all
+			(done) done
+			(ongoing) undone
+			find
+	writer
+		each object writes data to a specifik file in the format of sprintfiles and reviewfiles etc.
+		public methods
+			newfile
+			title
+			todo/specification
+			
+	encryption
+		the information in sprints/reviews can become personal, escpecially if you do this serious. Therefore the information in the files should be encrypted
+
+
+Platforms
+	Linux (ongoing)
+	Windows
+	Android
+		an app that syncs with your data from computer/server
