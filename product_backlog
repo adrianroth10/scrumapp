@@ -4,7 +4,7 @@ classes
 		public methods
 			(done) all
 			(done) done
-			(ongoing) undone
+			(done) undone
 			find
 	writer
 		each object writes data to a specifik file in the format of sprintfiles and reviewfiles etc.
