@@ -25,30 +25,30 @@ int main ()
 
 void constructor_test()
 {
-	Reader r("test/functioning");
+	Reader r("test/functioning", 1);
 	assert(r.get_error() == NO_ERROR);
 
-	Reader r2("/test/../error");
+	Reader r2("/test/../error", 1);
 	assert(r2.get_error() == WRONG_FILENAME);
 
-	Reader r3("test/error/");
+	Reader r3("test/error/", 1);
 	assert(r3.get_error() == WRONG_FILENAME);
 }
 
 void get_filename_test()
 {
-	Reader r("test/functioning");
+	Reader r("test/functioning", 1);
 	assert(r.get_filename().compare("test/functioning") == 0);
 
-	Reader r2("../error");
+	Reader r2("../error", 1);
 	assert(r2.get_filename().compare("") == 0);
 
 	string change = "first";
-	Reader r3(change);
+	Reader r3(change, 1);
 	change = "second";
 	assert(r3.get_filename().compare("first") == 0);
 
-	Reader r4("manipulating");
+	Reader r4("manipulating", 1);
 	string man = r4.get_filename();
 	man = "not_working";
 	assert(r4.get_filename().compare("manipulating") == 0);
@@ -56,7 +56,7 @@ void get_filename_test()
 
 void all_test()
 {
-	Reader read("tests/sprint_2016_03_18");
+	Reader read("tests/sprint_2016_03_18", 1);
 	string *result, correct;
 	result = read.all();
 	correct = "\
@@ -99,7 +99,7 @@ programmering\n\
 
 void undone_test()
 {
-	Reader read("tests/sprint_2016_03_18");
+	Reader read("tests/sprint_2016_03_18", 1);
 	string *result, correct;
 	result = read.undone();
 	correct = "\
@@ -134,7 +134,7 @@ programmering\n\
 
 void done_test()
 {
-	Reader read("tests/sprint_2016_03_18");
+	Reader read("tests/sprint_2016_03_18", 1);
 	string *result, correct;
 	result = read.done();
 	correct = "\

@@ -38,14 +38,15 @@ static int has_dotdot(string filename)
 }
 
 
-Reader::Reader(string file)
+Reader::Reader(string file, int type)
 {
-	if (file.back() == '/' || has_dotdot(file)) {
+	if ((file.back() == '/' || has_dotdot(file)) && type) {
 		error(WRONG_FILENAME);
 	} else {
 		errorcode = NO_ERROR;
 		filename = file;
 	}
+	this->type = type;
 }
 
 Reader::~Reader()
@@ -185,15 +186,27 @@ static string *read_file(string file, int type)
 
 string *Reader::all()
 {
-	return read_file(path + filename, ALL);
+	if (type == 0) {
+		return read_file(filename, ALL);
+	} else {
+		return read_file(path + filename, ALL);
+	}
 }
 
 string *Reader::undone()
 {
-	return read_file(path + filename, UNDONE);
+	if (type == 0) {
+		return read_file(filename, UNDONE);
+	} else {
+		return read_file(path + filename, UNDONE);
+	}
 }
 
 string *Reader::done()
 {
-	return read_file(path + filename, DONE);
+	if (type == 0) {
+		return read_file(filename, DONE);
+	} else {
+		return read_file(path + filename, DONE);
+	}
 }

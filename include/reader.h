@@ -22,8 +22,9 @@ class Reader
 	private:
 		string filename;
 		static const string path;
+		int type;
 	public:
-		Reader(string file);
+		Reader(string file, int type);
 		~Reader();
 		int get_error();
 		string get_filename();
